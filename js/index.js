@@ -90,7 +90,7 @@ function main()
 {
   let pf_canvas = document.getElementById('point_field');
   let pf_ctx = pf_canvas.getContext('2d');
-  let pf = new PointField(pf_canvas, 10);
+  let pf = new PointField(pf_canvas, 16);
 
   let cf_canvas = document.getElementById('cross_field');
   let cf_ctx = cf_canvas.getContext('2d');
@@ -102,6 +102,8 @@ function main()
 
   for (let p of points) {
     draw_square(pf_ctx, pf, p);
+    // Uncomment to only see the small center squares
+    // draw_square(cf_ctx, cf, transform_point(p, pf));
     draw_cross(cf_ctx, cf, pf, p);
   }
 }
