@@ -41,6 +41,26 @@ function draw_square(context, field, point) {
   context.fillRect(point.x * field.unit_width, point.y * field.unit_height, field.unit_width, field.unit_height)
 }
 
+
+// turn a point in pf into a cross (really 5 points) in cf and draw it
+function draw_cross(cf_context, cf, pf, pf_point) {
+  // helper function to make new points
+  function point_from_offset(offset_x, offset_y, other_point) {
+    return new Point(other_point.x + offset_x, other_point.y + offset_y, other_point.color);
+  }
+  transformed_point = transform_point(pf_point, pf);
+  let cross_points = [
+    transformed_point,
+    point_from_offset(0, -1, transformed_point),
+    point_from_offset(0, 1, transformed_point),
+    point_from_offset(-1, 0, transformed_point),
+    point_from_offset(1, 0, transformed_point)
+  ];
+  for( let p of cross_points) {
+    draw_square(cf_context, cf, p);
+  }
+}
+
 function main()
 {
   let pf_canvas = document.getElementById('point_field');
@@ -52,12 +72,9 @@ function main()
   let cf = new CrossField(cf_canvas, pf);
 
   let point = new Point(0, 0, 'red');
-  let transformed_point = transform_point(point, pf);
-  console.log(transformed_point);
 
   draw_square(pf_ctx, pf, point);
-  // draw_square(cf_ctx, cf, point);
-  draw_square(cf_ctx, cf, transformed_point);
+  draw_cross(cf_ctx, cf, pf, point);
 }
 
 function oldmain() {
