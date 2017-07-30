@@ -28,6 +28,7 @@ class CrossField {
 }
 
 // transform a point in s to the center of a cross in c
+// derivation in README
 function transform_point(point, point_field) {
   let new_x = point_field.n + point.x * 2 + point.y * -1;
   let new_y = 1 + point.x + point.y * 2;
