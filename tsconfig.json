@@ -1,0 +1,16 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "outDir": "js",
+        "sourceMap": false,
+        "allowJs": true,
+        "watch": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true
+    },
+    "include": [
+        "ts/**/*"
+    ]
+}

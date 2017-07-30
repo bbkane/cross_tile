@@ -41,3 +41,12 @@ Finally, though I've been using indices starting at one, in programming we usual
 
 
 `(x, y) -> (n, 1) + x(2, 1) + y(-1, 2)`
+
+
+### Generalization
+
+I'm pretty sure this generalizes to vector spaces of any dimensionality. To get from space `A` to space `B`, add the origin in `B` to a constant times a whatever the unit vector in `A` maps to in `B` for each unit vector in A.
+
+## TypeScript
+
+This is also the first time I've really used TypeScript. By opening the directory in VSCode and Running the build task once, I get compilation on save! NOTE: I'm putting all js/ts files in the ts/ folder. The js/ folder is a build artifact of the ts/ folder and I'm having git ignore it!
