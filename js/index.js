@@ -48,7 +48,7 @@ function draw_cross(cf_context, cf, pf, pf_point) {
   function point_from_offset(offset_x, offset_y, other_point) {
     return new Point(other_point.x + offset_x, other_point.y + offset_y, other_point.color);
   }
-  transformed_point = transform_point(pf_point, pf);
+  let transformed_point = transform_point(pf_point, pf);
   let cross_points = [
     transformed_point,
     point_from_offset(0, -1, transformed_point),
@@ -65,40 +65,32 @@ function main()
 {
   let pf_canvas = document.getElementById('point_field');
   let pf_ctx = pf_canvas.getContext('2d');
-  let pf = new PointField(pf_canvas, 5, 5);
+  let pf = new PointField(pf_canvas, 10);
 
   let cf_canvas = document.getElementById('cross_field');
   let cf_ctx = cf_canvas.getContext('2d');
+  cf_ctx.fillStyle = 'black';
+  cf_ctx.fillRect(0, 0, cf_canvas.width, cf_canvas.height);
   let cf = new CrossField(cf_canvas, pf);
 
-  let point = new Point(0, 0, 'red');
-
-  draw_square(pf_ctx, pf, point);
-  draw_cross(cf_ctx, cf, pf, point);
-}
-
-function oldmain() {
-
-
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-  f = new PointField(canvas, 5, 5);
-
-  for( var i = 0; i < f.num_rows; ++i) {
-    for (var j = 0; j < f.num_cols; ++j) {
+  let style = 'black';
+  for(let i = 0; i < pf.n; ++i) {
+    for (let j = 0; j < pf.n; ++j) {
       if ( i % 2 == 0 && j % 2 == 0) {
-        ctx.fillStyle = 'green';
+        style = 'green';
       }
       else if (i % 2 == 0 && j % 2 == 1){
-        ctx.fillStyle = 'red';
+        style = 'red';
       }
       else if (i % 2 == 1 && j % 2 == 0){
-        ctx.fillStyle = 'yellow';
+        style = 'yellow';
       }
       else { // 1 1
-        ctx.fillStyle = 'blue';
+        style = 'blue';
       }
-      ctx.fillRect(i * f.unit_width, j * f.unit_height, f.unit_width, f.unit_height);
+      let point = new Point(i, j, style);
+      draw_square(pf_ctx, pf, point);
+      draw_cross(cf_ctx, cf, pf, point);
     }
   }
 }
