@@ -28,25 +28,36 @@ class CrossField {
 }
 
 // transform a point in s to the center of a cross in c
-function transform_point(point, cross_field) {
-  new_x = cross_field.n + point.x * 2 + point.y * -1;
-  new_y = 1 + point.x + point.y * 2;
-  ret = new Point(new_x, new_y, point.color);
+function transform_point(point, point_field) {
+  let new_x = point_field.n + point.x * 2 + point.y * -1;
+  let new_y = 1 + point.x + point.y * 2;
+  let ret = new Point(new_x, new_y, point.color);
   return ret;
 }
 
 
-function draw_square(context, point_field, point) {
+function draw_square(context, field, point) {
   context.fillStyle = point.color;
-  context.fillRect(point.x * point_field.unit_width, point.y * point_field.unit_height, point_field.unit_width, point_field.unit_height)
+  context.fillRect(point.x * field.unit_width, point.y * field.unit_height, field.unit_width, field.unit_height)
 }
 
 function main()
 {
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-  pf = new PointField(canvas, 5, 5);
-  draw_square(ctx, pf, new Point(0, 1, 'red'));
+  let pf_canvas = document.getElementById('point_field');
+  let pf_ctx = pf_canvas.getContext('2d');
+  let pf = new PointField(pf_canvas, 5, 5);
+
+  let cf_canvas = document.getElementById('cross_field');
+  let cf_ctx = cf_canvas.getContext('2d');
+  let cf = new CrossField(cf_canvas, pf);
+
+  let point = new Point(0, 0, 'red');
+  let transformed_point = transform_point(point, pf);
+  console.log(transformed_point);
+
+  draw_square(pf_ctx, pf, point);
+  // draw_square(cf_ctx, cf, point);
+  draw_square(cf_ctx, cf, transformed_point);
 }
 
 function oldmain() {
