@@ -48,6 +48,30 @@ function transformPoint(point: Point, point_field: SquareField): Point {
   return ret;
 }
 
+function makeSquarePoints(point_field: SquareField) {
+  let points: Point[] = [];
+  let style = 'black';
+  for(let i = 0; i < point_field.n; ++i) {
+    for (let j = 0; j < point_field.n; ++j) {
+      if ( i % 2 == 0 && j % 2 == 0) {
+        style = 'blue';
+      }
+      else if (i % 2 == 0 && j % 2 == 1){
+        style = 'red';
+      }
+      else if (i % 2 == 1 && j % 2 == 0){
+        style = 'blue';
+      }
+      else { // 1 1
+        style = 'blue';
+      }
+      let point = new Point(i, j, style);
+      points.push(point);
+    }
+  }
+  return points
+}
+
 function makePoints(point_field: SquareField) {
   let points: Point[] = [];
   let style = 'black';
@@ -76,14 +100,15 @@ function main()
 {
   // I have to do the casting because this could be null. I'm just confident it's not
   let pf_canvas = <HTMLCanvasElement> document.getElementById('point_field');
-  let pf = new SquareField(pf_canvas, 10);
+  let pf = new SquareField(pf_canvas, 12);
 
   let cf_canvas = <HTMLCanvasElement> document.getElementById('cross_field');
   let cf = new SquareField(cf_canvas, pf.n * 3);
   cf.context.fillStyle = 'black';
   cf.context.fillRect(0, 0, cf_canvas.width, cf_canvas.height);
 
-  let points = makePoints(pf);
+  // let points = makePoints(pf);
+  let points = makeSquarePoints(pf);
 
   for (let p of points) {
     pf.drawPoint(p);
