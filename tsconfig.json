@@ -4,10 +4,11 @@
         "target": "es2017",
         "module": "commonjs",
         "outDir": "js",
-        "sourceMap": false,
+        "sourceMap": true,
         "allowJs": true,
         "watch": true,
         "strictNullChecks": true,
+        "strict": true,
         "noImplicitAny": true
     },
     "include": [

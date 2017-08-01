@@ -6,6 +6,9 @@ class SquareField {
     this.unit_width = canvas.width / this.n;
     this.unit_height = canvas.height / this.n;
     this.context = <CanvasRenderingContext2D> this.canvas.getContext('2d');
+    if (this.context == null) {
+      throw new Error('Null context.');
+    }
   }
   drawPoint(point: Point) {
     this.context.fillStyle = point.color;
@@ -27,8 +30,26 @@ class SquareField {
       point_from_offset(-1, 0, point),
       point_from_offset(1, 0, point)
     ];
-    for( let p of cross_points) {
+    for (let p of cross_points) {
       this.drawPoint(p);
+    }
+  }
+
+  drawGrid(color: string) {
+    let ctx = this.context;
+    ctx.strokeStyle = color;
+    // TODO: make sure I'm not mixing my widths and heights
+    for (let i = 1; i < this.n; ++i) {
+      ctx.beginPath()
+      ctx.moveTo(i * this.unit_width, 0);
+      ctx.lineTo(i * this.unit_width, this.canvas.height);
+      ctx.stroke();
+    }
+    for (let j = 1; j < this.n; ++j) {
+      ctx.beginPath()
+      ctx.moveTo(0, j * this.unit_height);
+      ctx.lineTo(this.canvas.width, j * this.unit_height)
+      ctx.stroke();
     }
   }
 
@@ -107,15 +128,16 @@ function main()
   cf.context.fillStyle = 'black';
   cf.context.fillRect(0, 0, cf_canvas.width, cf_canvas.height);
 
-  // let points = makePoints(pf);
-  let points = makeSquarePoints(pf);
+  let points = makePoints(pf);
+  // let points = makeSquarePoints(pf);
 
   for (let p of points) {
     pf.drawPoint(p);
-    // draw_square(pf_ctx, pf, p);
     // Uncomment to only see the small center squares
+    // cf.drawPoint(transformPoint(p, pf));
     cf.drawCross(transformPoint(p, pf));
   }
+  // cf.drawGrid('orange');
 }
 
 // Only execute stuff when the window is done
